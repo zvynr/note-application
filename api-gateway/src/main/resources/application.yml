@@ -1,0 +1,39 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+
+note:
+  service:
+    uri: ${NOTE_SERVICE_URI:http://localhost:8081}
+
+rate-limit:
+  replenish-rate: ${RATE_LIMIT_REPLENISH_RATE:10}
+  burst-capacity: ${RATE_LIMIT_BURST_CAPACITY:20}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    org.springframework.cloud.gateway: INFO
+    com.example.gateway: DEBUG
